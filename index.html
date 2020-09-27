@@ -4,21 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz</title>
+  <title>NumbersGame</title>
   <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-  <section class="container">
-    <p id="question"></p>
-    <ul id="choices"></ul>
-    <div id="btn" class="disabled">Next</div>
+  <div id="container">
+    <div id="timer">0.0</div>
+    <ul id="board">
+      <li>0</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+    </ul>
+    <div id="btn">START</div>
+  </div>
 
-    <section id="result" class="hidden">
-      <p></p>
-      <a href="">Replay??</a>
-    </section>
-  </section>
 
   <script src="js/main.js"></script>
 </body>
