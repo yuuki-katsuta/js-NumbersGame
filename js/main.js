@@ -26,7 +26,7 @@
         //currentNum++
         this.game.addCurrentNum()
 
-        if (this.game.getCurrentNum() === 4) {
+        if (this.game.getCurrentNum() === this.game.getLevel() ** 2) {
           clearTimeout(this.game.getTimeoutId())
         }
       }
@@ -39,7 +39,7 @@
       //Board クラスのコンストラクターでGameクラスののthisを受け取ってあげればいいですね。
       this.game = game
       this.panels = []
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < this.game.getLevel() ** 2; i++) {
         this.panels.push(new Panel(this.game))　//パネルインスタンス作成
       }
       //また、PanelクラスにGameクラスのインスタンスを渡した
@@ -61,7 +61,12 @@
 
     //Start時の処理
     activate() {
-      const nums = [0, 1, 2, 3]
+      //const nums = [0, 1, 2, 3]
+      const nums = []
+      for (let i = 0; i < this.game.getLevel() ** 2; i++) {
+        nums.push(i)
+        //例えばthis.game.getLevel() ** 2が１６なら16までの数字を配列に入れたことになる
+      }
 
       this.panels.forEach((panel) => {
 
@@ -120,14 +125,18 @@
   })
   */
 
-  //このゲーム全体に関するクラス
+  //このゲーム全体に関するクラスを作成
+  //メソッド、変数名の前に thisを適用させる
   class Game {
-    constructor() {
+    constructor(level) {
+
+      //難易度（level）プロパティ
+      this.level = level　//boardインスタンス作成より先に書く
+
       this.board = new Board(this)//boardクラスにGameインスタンスを渡してあげた
       //押し込むべき数値を宣言、最初は０ (再代入するのでletを使う)
       //値が決まってないからundefinedとする
       this.currentNum = undefined
-
 
       //タイマー開始した時間
       this.startTime = undefined
@@ -143,6 +152,14 @@
       btn.addEventListener('click', () => {
         this.start()
       })
+      this.setUp()
+    }
+    setUp() {
+      const container = document.getElementById('container')
+      /* 50px * 2 + 10px * 2 */
+      const WIDTH = 50
+      const PADDING = 10
+      container.style.width = WIDTH * this.level + PADDING * 2 + "px"
     }
 
     start() {
@@ -176,11 +193,17 @@
     getCurrentNum() {
       return this.currentNum
     }
+
     getTimeoutId() {
       return this.timeoutId
+    }
+
+    //ゲームのレベル（level）を返す関数
+    getLevel() {
+      return this.level
     }
   }
 
   //インスタンス作成
-  new Game()
+  new Game(6)
 }
